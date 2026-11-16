@@ -127,3 +127,15 @@
 | 回归 | manager-test 17 组、provider-test 7 项、ci-check、smoke 全部通过 |
 
 截图：`docs/screenshots/skills-overview.png`、`docs/screenshots/skill-content.png`、`docs/screenshots/import-more.png`、`docs/screenshots/import-dialog.png`。
+
+## 7. v1.4.0 更新检查（skill 级）
+
+`npm run test:updates`（本地 git daemon 夹具，真实 `git://` 传输）：
+
+- 只改 README 的提交 → 0 个仓库提示
+- 旧安装（无 manifest）首次检查 → 从 `repo.commit` 重建基线，0 误报
+- skill 目录内 `references/` 文件变化 → 1 个仓库提示
+- 子目录仓库新增 / 删除 skill → 提示
+- 无子目录仓库：`docs/` 变化 → 0；已导入 skill 目录内新增文件 → 提示
+
+真实仓库：`vercel/next.js` canary `81d6086b` → `9225ea75`，`skills/` 子树 tree id 两侧均为 `6a1682406b169e4888509990f9565ec53bd26048`，检查结果 `updateAvailable=false`（旧逻辑会提示）。

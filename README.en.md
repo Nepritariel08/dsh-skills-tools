@@ -41,9 +41,9 @@
 | **Inline content** | The chevron on each row expands the SKILL.md text, source repository, commit, path and update time, with update and remove actions. |
 | **Git import and snapshots** | https / ssh / intranet repositories, branches, tags, commits and subdirectories. Imports are read-only snapshots; source repositories are never modified. |
 | **Monorepo subdirectories** | Sparse checkout fetches only the target subdirectory, so pasting a `/tree/<ref>/<subdir>` URL imports skills from large monorepos such as Next.js without downloading the whole repository. |
-| **Update checks** | Compare the remote head and switch snapshots only after a successful clone. |
+| **Skill-aware update checks** | Compares the ref's commit first; only when it moved does it fetch that commit's trees (`tree:0`) and compare your managed skill directory tree ids (SKILL.md, references, scripts). README / CI / unrelated code commits no longer raise a prompt. |
 | **Collapse all** | One button expands or collapses every repository group. Groups start collapsed; the state is remembered in the browser and survives a reload. |
-| **Automatic update checks** | One check when the settings page opens, then every 30 minutes while visible. New commits show a banner with **Update all** or per-repository updates. |
+| **Automatic update checks** | One check when the settings page opens, then every 30 minutes while visible. The banner only appears when skills actually changed, with **Update all** or per-repository updates. |
 | **Activity dialog** | The toolbar opens a dedicated dialog listing enable, disable, import, update and failure events newest first, with refresh and copy; the last 300 entries survive a restart. |
 
 <p align="center">
@@ -75,7 +75,7 @@ dsh plugin --profile web add dsh-skills-tools      # Web
 dsh plugin --profile desktop add dsh-skills-tools  # Desktop
 ```
 
-Current version **1.3.0**: global collapse (collapsed by default, remembered per browser), automatic update checks with **Update all**, and a dedicated Recent activity dialog — plus the 1.2.0 monorepo sparse checkout.
+Current version **1.4.0**: update checks are skill-aware — a prompt appears only when the skill directories you manage (SKILL.md, references, scripts) actually change, so README / CI / unrelated code commits no longer raise a false alarm. Detection fetches the new commit with `tree:0` and lazily resolves only the directory objects it needs. 1.2.0's monorepo sparse checkout.
 
 > Restart `dsh web` / DSH Desktop after upgrading.
 >
